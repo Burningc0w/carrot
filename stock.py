@@ -40,10 +40,10 @@ def get_data_from_yahoo(reload_sp500=False) :
     end = dt.datetime(2016,12,31)
 
     for ticker in tickers:
-        print(ticker)
         if not os.path.exists('stock_dfs/{}.csv'.format(ticker)):
             df = web.DataReader(ticker, 'yahoo', start, end)
             df.to_csv('stock_dfs/{}.csv'.format(ticker))
+            print('Downloaded {}'.format(ticker))
         else:
             print('Already have {}'.format(ticker))
 
