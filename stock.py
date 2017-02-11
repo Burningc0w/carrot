@@ -99,4 +99,24 @@ def visualize_data():
     plt.tight_layout()
     plt.show()
 
-visualize_data()
+def process_data_for_labels(ticker):
+    hm_days = 7
+    df = pd.read_csv('sp500_joined_closes.csv', index_col=0)
+
+    tickers = df.columns.values.tolist()
+    
+    if ticker in tickers:
+        df.fillna(0, inplace=True)
+
+        for i in range(1, hm_days+1):
+            df['{}_{}d'.format(ticker, i)] = (df[ticker].shift(-1) - df[ticker]) / df[ticker]
+
+        df.fillna(0, inplace=True) 
+    else:
+        print('process_data_for_labels, ERROR: ' + ticker + ' does not exist')
+
+    return tickers, df
+
+process_data_for_labels('APPL')
+    
+
