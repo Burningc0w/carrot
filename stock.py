@@ -117,6 +117,3 @@ def process_data_for_labels(ticker):
 
     return tickers, df
 
-process_data_for_labels('APPL')
-    
-
