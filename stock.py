@@ -1,12 +1,15 @@
 import bs4 as bs
-import datetime as dt
+import datetime as dt 
+import matplotlib.pyplot as plt
+from matplotlib import style
 import os
 import numpy as np
 import pandas as pd
 import pandas_datareader.data as web
 import pickle
 import requests
-from time import sleep
+
+style.use('ggplot')
 
 def save_sp500_tickers() :
     resp = requests.get('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
@@ -71,9 +74,12 @@ def compile_data():
     main_df.to_csv('sp500_joined_closes.csv')
 
 def visualize_data():
-    df = pd.read.csv('sp500_joined_closes.csv')
+    df = pd.read_csv('sp500_joined_closes.csv', nrows=10)
     df_corr = df.corr()
     print(df_corr.head())
+
+    data = df_corr.values
+    fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
 
     heatmap = ax.pcolor(data, cmap=plt.cm.RdYlGn)
