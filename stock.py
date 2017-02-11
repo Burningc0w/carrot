@@ -74,7 +74,7 @@ def compile_data():
     main_df.to_csv('sp500_joined_closes.csv')
 
 def visualize_data():
-    df = pd.read_csv('sp500_joined_closes.csv', nrows=10)
+    df = pd.read_csv('sp500_joined_closes.csv')
     df_corr = df.corr()
     print(df_corr.head())
 
@@ -84,8 +84,8 @@ def visualize_data():
 
     heatmap = ax.pcolor(data, cmap=plt.cm.RdYlGn)
     fig.colorbar(heatmap)
-    ax.set_xticks(np.arrange(data.shape[0]) + 0.5, minor=False)
-    ax.set_yticks(np.arrange(data.shape[1]) + 0.5, minor=False)
+    ax.set_xticks(np.arange(data.shape[0]) + 0.5, minor=False)
+    ax.set_yticks(np.arange(data.shape[1]) + 0.5, minor=False)
     ax.invert_yaxis()
     ax.xaxis.tick_top()
 
