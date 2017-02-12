@@ -163,6 +163,23 @@ def extract_featuresets(ticker):
 
     return X, y, df
 
-extract_featuresets('XOM')
+def do_ml(ticker):
+    X, y, df = extract_featuresets(ticker)
+
+    X_train, X_test, y_train, y_test = cross_validation.train_test_split(x,
+                                                                         y,
+                                                                         test_size = 0.25)
+    
+    clf = neighbors.KNeighborsClassifier
+
+    clf.fit(X_train, y_train)
+    confidence = clf.score(X_test, y_test)
+    
+    prediction = clf.predict(X_test)
+    print('Predicted spread:', Counter(predictions))
+
+    return confidence
+    
+do_ml('BAC')
 
 
