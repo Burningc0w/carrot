@@ -11,7 +11,7 @@ import pickle
 import requests
 
 from sklearn import svm, cross_validation, neighbors
-from sklern.ensemble import VotingClassifier, RandomForestClassifier
+from sklearn.ensemble import VotingClassifier, RandomForestClassifier
 
 style.use('ggplot')
 
@@ -166,20 +166,24 @@ def extract_featuresets(ticker):
 def do_ml(ticker):
     X, y, df = extract_featuresets(ticker)
 
-    X_train, X_test, y_train, y_test = cross_validation.train_test_split(x,
+    X_train, X_test, y_train, y_test = cross_validation.train_test_split(X,
                                                                          y,
                                                                          test_size = 0.25)
+    clf = VotingClassifier([('lsvc', svm.LinearSVC()),
+                            ('knn', neighbors.KNeighborsClassifier()),
+                            ('rfor', RandomForestClassifier())
+                            ])
     
-    clf = neighbors.KNeighborsClassifier
-
+    clf = neighbors.KNeighborsClassifier()
     clf.fit(X_train, y_train)
     confidence = clf.score(X_test, y_test)
+    print('Accuracy,', confidence)
     
-    prediction = clf.predict(X_test)
+    predictions = clf.predict(X_test)
     print('Predicted spread:', Counter(predictions))
 
     return confidence
     
-do_ml('BAC')
+do_ml('NVDA')
 
 
