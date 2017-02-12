@@ -1,14 +1,17 @@
 import bs4 as bs
+from collections import Counter
 import datetime as dt 
 import matplotlib.pyplot as plt
 from matplotlib import style
-import os
 import numpy as np
+import os
 import pandas as pd
 import pandas_datareader.data as web
 import pickle
 import requests
-from collections import Counter
+
+from sklearn import svm, cross_validation, neighbors
+from sklern.ensemble import VotingClassifier, RandomForestClassifier
 
 style.use('ggplot')
 
